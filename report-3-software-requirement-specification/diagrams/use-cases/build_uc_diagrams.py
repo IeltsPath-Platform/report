@@ -82,10 +82,12 @@ DIAGRAMS = [
             'request': ('Request Examiner Review of Essay', 1, 6), 'speak': ('Submit Speaking for Grading', 0, 7),
             'record': ('Record Speaking Answers', 1, 8), 'sresult': ('View Speaking Result', 0, 8),
             'job': ('Track Grading Job', 0, 9), 'subs': ('View Submission History', 0, 10),
+            'mock': ('Take Mock Test', 0, 11), 'mockres': ('View Mock Test Result', 1, 11),
         },
         'actor_links': [None],
         'relations': [('attempt', 'reading', 'extend'), ('attempt', 'listening', 'extend'), ('write', 'wresult', 'include'),
-                      ('rewrite', 'wresult', 'extend'), ('request', 'wresult', 'extend'), ('speak', 'record', 'include')],
+                      ('rewrite', 'wresult', 'extend'), ('request', 'wresult', 'extend'), ('speak', 'record', 'include'),
+                      ('mockres', 'mock', 'extend')],
     },
     {
         'name': 'uc-05-learner-vocabulary', 'title': 'Use cases for Learner: vocabulary, flashcards and video',
