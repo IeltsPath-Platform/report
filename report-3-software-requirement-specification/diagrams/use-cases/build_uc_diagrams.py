@@ -1,4 +1,4 @@
-﻿"""Build the use case diagrams of SRS section 4.3 as HTML (SVG) and draw.io files.
+"""Build the use case diagrams of SRS section 4.3 as HTML (SVG) and draw.io files.
 
 Run: python build_uc_diagrams.py   (render the PNG files afterwards with Edge, see render step in the SRS notes)
 Layout is manual: every use case sits in a column (0, 1 or 2) and a row. Column 0 holds the use cases the actor
@@ -42,7 +42,7 @@ DIAGRAMS = [
             'profile': ('Edit Profile', 0, 0), 'goal': ('Set Learning Goal', 0, 1), 'password': ('Change Password', 0, 2),
             'signout': ('Sign Out', 0, 3), 'notifs': ('View Notifications', 0, 4),
             'prefs': ('Manage Notification Preferences', 0, 5), 'plans': ('View Plans and Pricing', 0, 6),
-            'key': ('Activate Key', 0, 7), 'points': ('View Points and Subscription', 0, 8), 'examiners': ('Browse Examiners', 0, 9),
+            'key': ('Activate Key', 0, 7), 'points': ('View Points and Subscription', 0, 8), 'examiners': ('Browse Examiners', 0, 9), 'delete': ('Delete Account', 0, 10),
         },
         'actor_links': [None],
         'relations': [],
@@ -111,7 +111,7 @@ DIAGRAMS = [
             'wordly': ('Play Wordly', 0, 3), 'rocket': ('Play Rocket', 0, 4), 'gresult': ('View Game Result', 0, 5),
             'feed': ('View Community Feed', 0, 6), 'comment': ('Comment on Post', 1, 5.5),
             'react': ('React to Post or Comment', 1, 6.5), 'report': ('Report Content', 1, 7.5),
-            'write': ('Write Post', 0, 8), 'profile': ('View Learner Profile', 0, 9), 'bookmark': ('Bookmark Post', 0, 10),
+            'write': ('Write Post', 0, 8), 'profile': ('View Learner Profile', 0, 9), 'bookmark': ('Bookmark Post', 0, 10), 'block': ('Block User', 0, 11),
         },
         'actor_links': [None],
         'relations': [('comment', 'feed', 'extend'), ('react', 'feed', 'extend'), ('report', 'feed', 'extend')],
