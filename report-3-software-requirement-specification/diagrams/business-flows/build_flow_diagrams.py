@@ -440,14 +440,14 @@ def review_skills():
         node('d1', 'decision', main, 250, 210, 84, 'Could the review', 'be loaded?'),
         node('s1', 'stop', side_x, 250, 250, 62, 'Show an error; the learner', 'can try again later'),
         node('d2', 'decision', main, 360, 210, 84, 'New questions', 'available?'),
-        node('s2', 'system', side_x, 360, 250, 48, 'Skip the review'),
+        node('s2', 'system', side_x, 360, 250, 76, 'Skip the review; if it was', 'required, check the earlier', 'knowledge (BF-02f)'),
         node('doq', 'step', learner, 470, 250, 62, 'Answer the review', 'questions'),
         node('d3', 'decision', main, 570, 210, 84, 'Scored 70%', 'or more?'),
         node('done', 'system', side_x, 570, 250, 48, 'Mark the review as done'),
         node('d4', 'decision', main, 680, 210, 84, 'Failed four', 'times?'),
         node('opt', 'system', side_x, 680, 250, 62, 'Let the learner continue;', 'the review becomes optional'),
         node('d5', 'decision', main, 790, 210, 84, 'Is this the second', 'failed try?'),
-        node('diag', 'system', side_x, 790, 250, 76, 'Check the earlier knowledge', 'it builds on; it can be', 'stopped after one answer'),
+        node('diag', 'system', side_x, 790, 250, 76, 'Check the earlier knowledge', 'it builds on (BF-02f); it can', 'be stopped after one answer'),
         node('theory', 'step', learner, 790, 250, 62, 'Read the theory again', 'and answer a quick check'),
     ]
     link = auto_linker(nodes)
@@ -476,6 +476,88 @@ def review_skills():
         'nodes': nodes, 'edges': edges,
     }
 
+
+def mistake_tracking():
+    learner, main, side_x = 158, 450, 710
+    nodes = [
+        node('start', 'start', learner, 70, 26, 26),
+        node('answer', 'step', learner, 145, 250, 62, 'Answer the questions of a', 'lesson, practice or review'),
+        node('record', 'system', main, 145, 270, 62, 'Record each known mistake', 'as made or avoided'),
+        node('d0', 'decision', main, 240, 230, 84, 'Enough evidence', 'about a mistake?'),
+        node('d1', 'decision', main, 345, 210, 84, 'Is it now', 'a priority?'),
+        node('d2', 'decision', main, 450, 240, 92, 'A lesson and new', 'questions for it?'),
+        node('skip', 'end', side_x, 560, 26, 26),
+        node('suggest', 'system', main, 560, 290, 76, 'Suggest a review of the', 'knowledge point; it', 'blocks nothing'),
+        node('open', 'step', learner, 560, 250, 48, 'Open the review'),
+        node('pick', 'system', main, 660, 290, 76, 'Choose first a set that tests', "the learner's weakest", 'mistake'),
+        node('do', 'step', learner, 755, 250, 62, 'Do the review', '(BF-02d)'),
+        node('end', 'end', learner, 840, 26, 26),
+    ]
+    link = auto_linker(nodes)
+    edges = [
+        link('start', 'bottom', 'answer', 'top'),
+        link('answer', 'right', 'record', 'left'),
+        link('record', 'bottom', 'd0', 'top'),
+        link('d0', 'right', 'skip', 'top', (side_x, 240), label='No'),
+        link('d0', 'bottom', 'd1', 'top', label='Yes'),
+        link('d1', 'right', 'skip', 'top', (side_x, 345), label='No'),
+        link('d1', 'bottom', 'd2', 'top', label='Yes'),
+        link('d2', 'right', 'skip', 'top', (side_x, 450), label='No'),
+        link('d2', 'bottom', 'suggest', 'top', label='Yes'),
+        link('suggest', 'left', 'open', 'right'),
+        link('open', 'bottom', 'pick', 'left', (learner, 660)),
+        link('pick', 'bottom', 'do', 'right', (main, 755)),
+        link('do', 'bottom', 'end', 'top'),
+    ]
+    return {
+        'name': 'bf-02e-mistake-tracking', 'title': 'BF-02e Mistake tracking',
+        'description': 'How mistakes are recorded and used to suggest a review and choose its questions.',
+        'width': 858, 'height': 880,
+        'lanes': [('Learner', 8, 308), ('IELTSPath', 308, 850)],
+        'nodes': nodes, 'edges': edges,
+    }
+
+def prerequisite_check():
+    learner, main, side_x = 158, 450, 720
+    nodes = [
+        node('start', 'start', learner, 70, 26, 26),
+        node('open', 'step', learner, 150, 250, 48, 'Open the review'),
+        node('find', 'system', main, 150, 280, 62, 'Look for the earlier knowledge', 'this point builds on'),
+        node('d1', 'decision', main, 255, 200, 84, 'Is there', 'any?'),
+        node('none', 'end', side_x, 255, 26, 26),
+        node('give', 'system', main, 365, 270, 62, 'Give a short check', 'on each of them'),
+        node('answer', 'step', learner, 365, 250, 62, 'Answer the checks; may', 'stop after one answer'),
+        node('d2', 'decision', main, 475, 236, 92, 'Failed, with levels', 'and checks left?'),
+        node('deeper', 'system', side_x, 475, 200, 62, 'Check what the failed', 'point builds on'),
+        node('d3', 'decision', main, 590, 210, 84, 'Did any check', 'fail?'),
+        node('root', 'system', side_x, 590, 230, 76, 'The point under review', 'is the gap: continue', 'its review'),
+        node('gaps', 'system', main, 705, 290, 76, 'Require a review of each', 'deepest failed point; the', 'first review waits for them'),
+        node('end', 'end', main, 805, 26, 26),
+    ]
+    link = auto_linker(nodes)
+    edges = [
+        link('start', 'bottom', 'open', 'top'),
+        link('open', 'right', 'find', 'left'),
+        link('find', 'bottom', 'd1', 'top'),
+        link('d1', 'right', 'none', 'left', label='No'),
+        link('d1', 'bottom', 'give', 'top', label='Yes'),
+        link('give', 'left', 'answer', 'right'),
+        link('answer', 'bottom', 'd2', 'left', (learner, 475)),
+        link('d2', 'right', 'deeper', 'left', label='Yes'),
+        link('deeper', 'top', 'give', 'right', (side_x, 365)),
+        link('d2', 'bottom', 'd3', 'top', label='No'),
+        link('d3', 'right', 'root', 'left', label='No'),
+        link('d3', 'bottom', 'gaps', 'top', label='Yes'),
+        link('gaps', 'bottom', 'end', 'top'),
+        link('root', 'bottom', 'end', 'right', (side_x, 805)),
+    ]
+    return {
+        'name': 'bf-02f-prerequisite-check', 'title': 'BF-02f Prerequisite check',
+        'description': 'How the system walks back through earlier knowledge to find the gap behind a weak point.',
+        'width': 858, 'height': 848,
+        'lanes': [('Learner', 8, 308), ('IELTSPath', 308, 850)],
+        'nodes': nodes, 'edges': edges,
+    }
 
 def writing_grading():
     learner, main, side_x, ai = 158, 450, 695, 905
@@ -568,7 +650,7 @@ def speaking_grading():
     }
 
 
-FLOWS = [placement_start, placement_result, study_lesson, practice_lesson, topic_test, review_skills, writing_grading, speaking_grading]
+FLOWS = [placement_start, placement_result, study_lesson, practice_lesson, topic_test, review_skills, mistake_tracking, prerequisite_check, writing_grading, speaking_grading]
 
 
 def svg_text(x, y, value, size=FONT, colour=INK, weight=400):
