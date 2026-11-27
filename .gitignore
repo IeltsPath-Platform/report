@@ -1,0 +1,12 @@
+# Office lock and temporary files
+~$*
+*.tmp
+
+# Tooling leftovers
+__pycache__/
+*.pyc
+*.real.png
+
+# Local secrets
+.env
+.env.*
