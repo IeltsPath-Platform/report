@@ -17,7 +17,7 @@ DIAGRAMS = [
         'caption': 'Figure 3.1 — Overview of the main entities',
         'boxes': {
             'plan': ('Plan', 1, 0, ['Name, status', 'Features and limits']),
-            'subscription': ('Subscription', 0, 0, ['Status, start and end date', 'Source (key or grant)']),
+            'subscription': ('Subscription', 0, 0, ['Status, start and end date', 'Source (activation key)']),
             'user': ('User', 0, 1, ['Full name, e-mail, phone', 'Role, account status'], 8),
             'wallet': ('Point Wallet', 1, 1, ['Current balance', 'Total earned and spent']),
             'course': ('Course', 2, 0, ['Name, band level', 'Free or paid, status']),
@@ -72,7 +72,7 @@ DIAGRAMS = [
             'profile': ('Learner Profile', 1, 0, ['Display name, avatar, bio', 'Self-reported band, time zone', 'Visible to others or not']),
             'goal': ('Learning Goal', 1, 1, ['Target band, exam date', 'Study minutes per day', 'Status, started and ended on']),
             'wallet': ('Point Wallet', 1, 2, ['Current balance', 'Total earned and total spent']),
-            'subscription': ('Subscription', 1, 3, ['Status, start and end date', 'Source (key or grant)', 'Human grading credits']),
+            'subscription': ('Subscription', 1, 3, ['Status, start and end date', 'Source (activation key)', 'Human grading credits']),
             'activation': ('Key Activation', 1, 5, ['Activated on', 'Points, days, credits given']),
             'signin': ('Sign-in Record', 1, 6, ['Success or failure and reason', 'Device and address']),
             'ledger': ('Point Ledger Entry', 2, 2, ['Amount added or taken', 'Balance after', 'Reason (key, grading, unlock…)']),
